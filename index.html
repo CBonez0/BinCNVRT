@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text/Binary Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label, input, textarea {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #555;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e7e7e7;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text/Binary Converter</h1>
+        <label for="inputText">Enter any text or binary:</label>
+        <textarea id="inputText" rows="4"></textarea>
+        <button onclick="convert()">Convert</button>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        function textToBinary(text) {
+            return text.split('').map(char => {
+                return char.charCodeAt(0).toString(2).padStart(8, '0');
+            }).join(' ');
+        }
+
+        function binaryToText(binary) {
+            return binary.split(' ').map(bin => {
+                return String.fromCharCode(parseInt(bin, 2));
+            }).join('');
+        }
+
+        function isBinary(string) {
+            return string.split(' ').every(part => part.length === 8 && /^[01]+$/.test(part));
+        }
+
+        function convert() {
+            const inputText = document.getElementById('inputText').value;
+            let outputText;
+
+            if (isBinary(inputText)) {
+                outputText = binaryToText(inputText);
+            } else {
+                outputText = textToBinary(inputText);
+            }
+
+            document.getElementById('output').innerText = `Output: ${outputText}`;
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert("Output copied to clipboard.");
+            });
+        }
+    </script>
+</body>
+</html>
