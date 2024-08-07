@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text/Binary Converter</title>
+    <title>Text / Binary Converter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,10 +22,20 @@
             text-align: center;
             color: #333;
         }
-        label, input, textarea {
+        label {
             display: block;
+            margin: 10px 0 5px;
+        }
+        textarea {
             width: 100%;
-            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: none;
+            min-height: 100px;
+            max-height: 300px;
+            overflow: hidden;
         }
         button {
             display: block;
@@ -36,6 +46,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
         button:hover {
             background: #555;
@@ -52,7 +63,7 @@
     <div class="container">
         <h1>Text/Binary Converter</h1>
         <label for="inputText">Enter any text or binary:</label>
-        <textarea id="inputText" rows="4"></textarea>
+        <textarea id="inputText" rows="4" oninput="autoResize(this)"></textarea>
         <button onclick="convert()">Convert</button>
         <div id="output" class="output"></div>
     </div>
@@ -88,6 +99,11 @@
             navigator.clipboard.writeText(outputText).then(() => {
                 alert("Output copied to clipboard.");
             });
+        }
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
         }
     </script>
 </body>
